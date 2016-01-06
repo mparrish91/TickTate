@@ -13,6 +13,8 @@ import Parse
 
 class ParseHelper: NSObject {
     
+    var loggedInUser: PFUser?
+    
     
     class func saveUserWithLocationToParse(user: PFUser, geopoint: PFGeoPoint) {
         

@@ -14,6 +14,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager:CLLocationManager?
     var locationRecieved: Bool?
+    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
     override func viewDidLoad() {
@@ -45,8 +46,31 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
     //then saves in ActiveUsers row and fetches events 
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        let meters = newLocation.distanceFromLocation(oldLocation)
         
-        <#code#>
+        
+        if (meters != -1 && meters < 50.0) {
+            return
+        }
+        
+        print(NSString(format: "## Latitude :%.0f", newLocation.coordinate.latitude))
+        print(NSString(format: "## Longtitude :%.0f", newLocation.coordinate.longitude))
+
+
+        appDelegate.currentLocation =
+        
+        stopUpdate()
+            
+        let thisUser = ParseHelper().loggedInUser
+            
+        ParseHelper.saveUserWithLocationToParse(thisUser, PFGeoPoint(appDelegate.currentLocation)
+            
+        
+        
+        
+            
+            
+        }
     }
     
     
