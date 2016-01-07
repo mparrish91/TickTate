@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0C1AC5A81011DA4D53035F63 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 625AA9A336B60D73958D393B /* Pods.framework */; };
+		E1484BB71C3E2DBB0044EA4A /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1484BB61C3E2DBB0044EA4A /* Event.swift */; };
+		E1484BB91C3E2DC60044EA4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1484BB81C3E2DC60044EA4A /* User.swift */; };
 		E14B9AF41C3DC9190005F7C1 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E14B9AF31C3DC9190005F7C1 /* Bolts.framework */; };
 		E14B9AF61C3DC91D0005F7C1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E14B9AF51C3DC91D0005F7C1 /* Parse.framework */; };
 		E14B9AF81C3DCD820005F7C1 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B9AF71C3DCD820005F7C1 /* EventsViewController.swift */; };
@@ -42,6 +44,8 @@
 /* Begin PBXFileReference section */
 		625AA9A336B60D73958D393B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFE1CB7513844C9D50A5A99F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E1484BB61C3E2DBB0044EA4A /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		E1484BB81C3E2DC60044EA4A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E14B9AF31C3DC9190005F7C1 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Pods/../build/Debug-iphoneos/Bolts.framework"; sourceTree = "<group>"; };
 		E14B9AF51C3DC91D0005F7C1 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Pods/../build/Debug-iphoneos/Parse.framework"; sourceTree = "<group>"; };
 		E14B9AF71C3DCD820005F7C1 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +105,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E1484BB51C3E2DAA0044EA4A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E1484BB61C3E2DBB0044EA4A /* Event.swift */,
+				E1484BB81C3E2DC60044EA4A /* User.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		E15757B11C3DC66900B58017 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +139,7 @@
 		E15757BC1C3DC66900B58017 /* TickTateChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				E1484BB51C3E2DAA0044EA4A /* Model */,
 				E15757BD1C3DC66900B58017 /* AppDelegate.swift */,
 				E15757BF1C3DC66900B58017 /* ViewController.swift */,
 				E14B9AF71C3DCD820005F7C1 /* EventsViewController.swift */,
@@ -352,7 +366,9 @@
 				E14B9AFA1C3DCD8F0005F7C1 /* CitiesViewController.swift in Sources */,
 				E15757BE1C3DC66900B58017 /* AppDelegate.swift in Sources */,
 				E14B9AF81C3DCD820005F7C1 /* EventsViewController.swift in Sources */,
+				E1484BB71C3E2DBB0044EA4A /* Event.swift in Sources */,
 				E14B9AFC1C3DD25B0005F7C1 /* ParseHelper.swift in Sources */,
+				E1484BB91C3E2DC60044EA4A /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

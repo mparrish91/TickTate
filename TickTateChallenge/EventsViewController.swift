@@ -11,14 +11,14 @@ import CoreLocation
 import Parse
 
 
-class EventsViewController: UIViewController, CLLocationManagerDelegate {
+class EventsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var locationManager:CLLocationManager?
     var locationRecieved: Bool?
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
-    var eventsArray: [Int]?
+    var eventsArray: [Any]?
     @IBOutlet weak var eventsTableView: UITableView!
     
     override func viewDidLoad() {
@@ -67,8 +67,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
         let thisUser = ParseHelper().loggedInUser
         
         
-        
-        ParseHelper.saveUserWithLocationToParse(thisUser, PFGeoPoint(appDelegate.currentLocation)
+        ParseHelper.saveUserWithLocationToParse(thisUser, geopoint: PFGeoPoint(location: appDelegate.currentLocation))
         
         
         
@@ -107,7 +106,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
                 for object in objects! {
                     //if for this user, skip it
                     let eventID = object["eventID"] as! String
-                    print(eventID))
+                    print(eventID)
                     
                     let artist = object["artist"]
                     
@@ -115,14 +114,14 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
                     dict["eventID"] = eventID
                     dict["artist"] = artist
                     
-                    self.eventsArray.addObject(dict)
+                    self.eventsArray?.append(dict)
                 }
                 
                 if ((bRefreshUI) != nil)
                 {
                     self.eventsTableView.reloadData()
-                }else{
                 }
+            }
             
             else{
                 print("\(error?.description)")
@@ -135,6 +134,33 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        let dict = eventsArray![indexPath.row]
+        
+        
+        
+        let artist = dict.objectForKey("artist") as! String
+
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        cell?.backgroundColor = UIColor.clearColor()
+        
+        cell?.textLabel!.text = artist
+        cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
+        cell?.contentView.backgroundColor = UIColor.clearColor()
+        
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      (eventsArray?.count)!ay?.count
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
     
     
     
