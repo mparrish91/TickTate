@@ -16,7 +16,6 @@
 		E14B9AFA1C3DCD8F0005F7C1 /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B9AF91C3DCD8F0005F7C1 /* CitiesViewController.swift */; };
 		E14B9AFC1C3DD25B0005F7C1 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B9AFB1C3DD25B0005F7C1 /* ParseHelper.swift */; };
 		E15757BE1C3DC66900B58017 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15757BD1C3DC66900B58017 /* AppDelegate.swift */; };
-		E15757C01C3DC66900B58017 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15757BF1C3DC66900B58017 /* ViewController.swift */; };
 		E15757C31C3DC66900B58017 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15757C11C3DC66900B58017 /* Main.storyboard */; };
 		E15757C51C3DC66900B58017 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E15757C41C3DC66900B58017 /* Assets.xcassets */; };
 		E15757C81C3DC66900B58017 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15757C61C3DC66900B58017 /* LaunchScreen.storyboard */; };
@@ -54,7 +53,6 @@
 		E1511B87C8906B2793790336 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E15757BA1C3DC66900B58017 /* TickTateChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TickTateChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15757BD1C3DC66900B58017 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E15757BF1C3DC66900B58017 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E15757C21C3DC66900B58017 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E15757C41C3DC66900B58017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E15757C71C3DC66900B58017 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 			children = (
 				E1484BB51C3E2DAA0044EA4A /* Model */,
 				E15757BD1C3DC66900B58017 /* AppDelegate.swift */,
-				E15757BF1C3DC66900B58017 /* ViewController.swift */,
 				E14B9AF71C3DCD820005F7C1 /* EventsViewController.swift */,
 				E14B9AFB1C3DD25B0005F7C1 /* ParseHelper.swift */,
 				E14B9AF91C3DCD8F0005F7C1 /* CitiesViewController.swift */,
@@ -362,7 +359,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E15757C01C3DC66900B58017 /* ViewController.swift in Sources */,
 				E14B9AFA1C3DCD8F0005F7C1 /* CitiesViewController.swift in Sources */,
 				E15757BE1C3DC66900B58017 /* AppDelegate.swift in Sources */,
 				E14B9AF81C3DCD820005F7C1 /* EventsViewController.swift in Sources */,

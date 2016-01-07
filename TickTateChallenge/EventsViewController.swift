@@ -16,9 +16,9 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var locationManager:CLLocationManager?
     var locationRecieved: Bool?
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    
     var eventsArray: [Any]?
+    var RANGE_IN_MILES: CLLocationDistance = 25
+    
     @IBOutlet weak var eventsTableView: UITableView!
     
     override func viewDidLoad() {
@@ -26,7 +26,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     func didLogin() {
         startUpdate()
-        
     }
     
     
@@ -44,14 +43,20 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
     }
     
+    func stopUpdate() {
+        if (locationManager != nil) {
+            locationManager!.stopUpdatingLocation()
+        }
+    }
+    
     
     //store finalized user location
-    //then saves in ActiveUsers row and fetches events 
-    
+    //then saves users and fetches events
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        
         let meters = newLocation.distanceFromLocation(oldLocation)
         
-        
+        //if meters is innacurate or if user hasn't moved much
         if (meters != -1 && meters < 50.0) {
             return
         }
@@ -60,35 +65,16 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         print(NSString(format: "## Longtitude :%.0f", newLocation.coordinate.longitude))
         
         appDelegate.currentLocation = newLocation
-        
-        
+    
         stopUpdate()
         
         let thisUser = ParseHelper().loggedInUser
-        
-        
         ParseHelper.saveUserWithLocationToParse(thisUser, geopoint: PFGeoPoint(location: appDelegate.currentLocation))
-        
-        
-        
-        
+        self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, bRefreshUI: true)
     }
-    
-    
-    
     
 
-    
-    
-    
-    
-    
-    func stopUpdate() {
-        if (locationManager != nil) {
-            locationManager!.stopUpdatingLocation()
-        }
-    }
-    
+    //this method polls for events from sorrounding region
     func fireNearEventsQuery(distanceinMiles: CLLocationDistance?, argCoord: CLLocationCoordinate2D?, bRefreshUI: Bool?) {
         
         let miles = distanceinMiles
@@ -110,7 +96,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                     
                     let artist = object["artist"]
                     
-                    let dict = NSMutableDictionary()
+                    var dict = [String: AnyObject]()
                     dict["eventID"] = eventID
                     dict["artist"] = artist
                     
@@ -136,12 +122,9 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        let dict = eventsArray?[indexPath.row]
         
-        let dict = eventsArray![indexPath.row]
-        
-        
-        
-        let artist = dict.objectForKey("artist") as! String
+//        let artist = dict["artist"]
 
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
@@ -155,8 +138,11 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      (eventsArray?.count)!ay?.count
+    
+        return (eventsArray?.count)!
+    
     }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -166,7 +152,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     
     
-    //this method polls for events from sorrounding region
 
 
 
