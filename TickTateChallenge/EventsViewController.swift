@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+
 import Parse
 
 
@@ -16,12 +17,73 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var locationManager:CLLocationManager?
     var locationRecieved: Bool?
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var eventsArray: [Any]?
+    var eventsArray: [[String: AnyObject]] = []
     var RANGE_IN_MILES: CLLocationDistance = 25
     
     @IBOutlet weak var eventsTableView: UITableView!
     
     override func viewDidLoad() {
+        
+        var user = PFUser()
+        user.username = "malcolm"
+        user.password = "12345"
+        user.email = "email@example.com"
+        
+        user.signUpInBackgroundWithBlock {
+            (succeeded: Bool, error: NSError?) -> Void in
+            if error == nil {
+                // Hooray! Let them use the app now.
+                print("user Saved")
+            } else {
+            }
+        }
+        
+        
+        var currentUser = PFUser.currentUser()
+        startUpdate()
+        
+        let geoCoder = CLGeocoder()
+        let location = appDelegate.currentLocation
+        
+        
+        
+        geoCoder.reverseGeocodeLocation(location!, completionHandler: { (placemarks, error) -> Void in
+            
+            // Place details
+            var placeMark: CLPlacemark!
+            placeMark = placemarks?[0]
+            
+            // Address dictionary
+            print(placeMark.addressDictionary)
+            
+            // Location name
+            if let locationName = placeMark.addressDictionary!["Name"] as? NSString {
+                print(locationName)
+            }
+            
+            // Street address
+            if let street = placeMark.addressDictionary!["Thoroughfare"] as? NSString {
+                print(street)
+            }
+            
+            // City
+            if let city = placeMark.addressDictionary!["City"] as? NSString {
+                print(city)
+                self.navigationController!.title = city as String
+            }
+            
+            // Zip code
+            if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
+                print(zip)
+            }
+            
+            // Country
+            if let country = placeMark.addressDictionary!["Country"] as? NSString {
+                print(country)
+            }
+            
+        })
+
     }
     
     func didLogin() {
@@ -85,25 +147,25 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: (argCoord?.latitude)!, longitude: (argCoord?.longitude)!), withinMiles: miles!)
         
         //delete existing rows
-        eventsArray?.removeAll()
+        eventsArray.removeAll()
         eventsTableView.reloadData()
 
         query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
             if error == nil {
                 for object in objects! {
                     
-                    let eventID = object["eventID"] as! String
-                    let venue = object["venue"] as! String
+                    let eventID = object["eventID"]
+                    let venue = object["venue"]
 //                    let date = object["date"] as! NSDate
-                    let city = object["city"] as! String
-                    let artist = object["artist"] as! String
+                    let city = object["city"]
+                    let artist = object["artist"]
                     print(artist)
 
-                    var dict = [String: String]()
+                    var dict = [String: AnyObject]()
                     dict["eventID"] = eventID
                     dict["artist"] = artist
                     
-                    self.eventsArray?.append(dict)
+                    self.eventsArray.append(dict)
                 }
                 
                 if ((bRefreshUI) != nil)
@@ -121,14 +183,20 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let dict = eventsArray?[indexPath.row]
-        
-        let artist = dict["artist"]
-
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         cell?.backgroundColor = UIColor.clearColor()
         
+//        guard let d = eventsArray[indexPath.row], dict = d as? [String: AnyObject] else { return cell! }
+        
+        let dict = eventsArray[indexPath.row]
+
+        let artist = dict["artist"] as! String
+        let date = dict["date"] as! NSDate
+        let venue = dict["venue"] as! String
+
         cell?.textLabel!.text = artist
+        cell?.detailTextLabel!.text = artist
+
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
         cell?.contentView.backgroundColor = UIColor.clearColor()
         
@@ -137,7 +205,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-        return (eventsArray?.count)!
+        return (eventsArray.count)
     
     }
     
@@ -145,6 +213,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
+    
+    
     
 
 
