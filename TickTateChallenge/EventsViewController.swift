@@ -64,6 +64,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         print(NSString(format: "## Latitude :%.0f", newLocation.coordinate.latitude))
         print(NSString(format: "## Longtitude :%.0f", newLocation.coordinate.longitude))
         
+        //users current location
         appDelegate.currentLocation = newLocation
     
         stopUpdate()
@@ -78,7 +79,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     func fireNearEventsQuery(distanceinMiles: CLLocationDistance?, argCoord: CLLocationCoordinate2D?, bRefreshUI: Bool?) {
         
         let miles = distanceinMiles
-        print("fireNearUsersQuery \(miles)")
+        print("fireEventsWithinXMiles: \(miles)")
         
         let query = PFQuery(className: "Events")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: (argCoord?.latitude)!, longitude: (argCoord?.longitude)!), withinMiles: miles!)
@@ -90,13 +91,15 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
             if error == nil {
                 for object in objects! {
-                    //if for this user, skip it
+                    
                     let eventID = object["eventID"] as! String
-                    print(eventID)
-                    
-                    let artist = object["artist"]
-                    
-                    var dict = [String: AnyObject]()
+                    let venue = object["venue"] as! String
+//                    let date = object["date"] as! NSDate
+                    let city = object["city"] as! String
+                    let artist = object["artist"] as! String
+                    print(artist)
+
+                    var dict = [String: String]()
                     dict["eventID"] = eventID
                     dict["artist"] = artist
                     
@@ -111,12 +114,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
             
             else{
                 print("\(error?.description)")
-                
                 }
-                
-            }
-        
-        
+        }
     }
     
     
@@ -124,9 +123,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         let dict = eventsArray?[indexPath.row]
         
-//        let artist = dict["artist"]
+        let artist = dict["artist"]
 
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         cell?.backgroundColor = UIColor.clearColor()
         
@@ -148,14 +146,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
     }
     
-    
-    
-    
-    
-
-
-
-
 
 
 }
