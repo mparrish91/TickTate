@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Parse
 
 
 class EventsViewController: UIViewController, CLLocationManagerDelegate {
@@ -17,8 +18,10 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
+    var eventsArray: [Int]?
+    @IBOutlet weak var eventsTableView: UITableView!
+    
     override func viewDidLoad() {
-        
     }
     
     func didLogin() {
@@ -55,23 +58,28 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
         
         print(NSString(format: "## Latitude :%.0f", newLocation.coordinate.latitude))
         print(NSString(format: "## Longtitude :%.0f", newLocation.coordinate.longitude))
-
-
-        appDelegate.currentLocation =
+        
+        appDelegate.currentLocation = newLocation
+        
         
         stopUpdate()
-            
+        
         let thisUser = ParseHelper().loggedInUser
-            
+        
+        
+        
         ParseHelper.saveUserWithLocationToParse(thisUser, PFGeoPoint(appDelegate.currentLocation)
-            
         
         
         
-            
-            
-        }
+        
     }
+    
+    
+    
+    
+
+    
     
     
     
@@ -80,6 +88,50 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate {
         if (locationManager != nil) {
             locationManager!.stopUpdatingLocation()
         }
+    }
+    
+    func fireNearEventsQuery(distanceinMiles: CLLocationDistance?, argCoord: CLLocationCoordinate2D?, bRefreshUI: Bool?) {
+        
+        let miles = distanceinMiles
+        print("fireNearUsersQuery \(miles)")
+        
+        let query = PFQuery(className: "Events")
+        query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: (argCoord?.latitude)!, longitude: (argCoord?.longitude)!), withinMiles: miles!)
+        
+        //delete existing rows
+        eventsArray?.removeAll()
+        eventsTableView.reloadData()
+
+        query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
+            if error == nil {
+                for object in objects! {
+                    //if for this user, skip it
+                    let eventID = object["eventID"] as! String
+                    print(eventID))
+                    
+                    let artist = object["artist"]
+                    
+                    let dict = NSMutableDictionary()
+                    dict["eventID"] = eventID
+                    dict["artist"] = artist
+                    
+                    self.eventsArray.addObject(dict)
+                }
+                
+                if ((bRefreshUI) != nil)
+                {
+                    self.eventsTableView.reloadData()
+                }else{
+                }
+            
+            else{
+                print("\(error?.description)")
+                
+                }
+                
+            }
+        
+        
     }
     
     
