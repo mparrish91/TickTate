@@ -24,30 +24,35 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     override func viewDidLoad() {
         
-        var user = PFUser()
-        user.username = "malcolm"
-        user.password = "12345"
-        user.email = "email@example.com"
-        
-        user.signUpInBackgroundWithBlock {
-            (succeeded: Bool, error: NSError?) -> Void in
-            if error == nil {
-                // Hooray! Let them use the app now.
-                print("user Saved")
-            } else {
-            }
-        }
+//        var user = PFUser()
+//        user.username = "malcolm"
+//        user.password = "12345"
+//        user.email = "email@example.com"
+//        
+//        user.signUpInBackgroundWithBlock {
+//            (succeeded: Bool, error: NSError?) -> Void in
+//            if error == nil {
+//                // Hooray! Let them use the app now.
+//                print("user Saved")
+//            } else {
+//            }
+//        }
         
         
         var currentUser = PFUser.currentUser()
         startUpdate()
         
         let geoCoder = CLGeocoder()
-        let location = appDelegate.currentLocation
+        
+        var longitude :CLLocationDegrees = -122.0312186
+        var latitude :CLLocationDegrees = 37.33233141
+        
+        var location = CLLocation(latitude: latitude, longitude: longitude)
+//        let location = appDelegate.currentLocation
         
         
         
-        geoCoder.reverseGeocodeLocation(location!, completionHandler: { (placemarks, error) -> Void in
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             
             // Place details
             var placeMark: CLPlacemark!
@@ -69,7 +74,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
             // City
             if let city = placeMark.addressDictionary!["City"] as? NSString {
                 print(city)
-                self.navigationController!.title = city as String
+                self.title = city as String
             }
             
             // Zip code
