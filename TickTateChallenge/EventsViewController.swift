@@ -196,16 +196,13 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         cell?.backgroundColor = UIColor.clearColor()
         
-//        guard let d = eventsArray[indexPath.row], dict = d as? [String: AnyObject] else { return cell! }
-        
         let dict = eventsArray[indexPath.row]
+        print(dict)
 
         let artist = dict["artist"] as! String
-        let date = dict["date"] as! NSDate
-        let venue = dict["venue"] as! String
+        print(artist)
 
         cell?.textLabel!.text = artist
-        cell?.detailTextLabel!.text = artist
 
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
         cell?.contentView.backgroundColor = UIColor.clearColor()
