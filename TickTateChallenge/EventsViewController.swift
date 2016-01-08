@@ -55,13 +55,17 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         if CLLocationManager.locationServicesEnabled() {
             print("enabled")
-            if locationManager != nil {
+        }else{
+            return
+        }
+        if locationManager != nil {
                 locationManager!.stopUpdatingLocation()
             }else {
             locationManager = CLLocationManager()
             locationManager!.delegate = self
             locationManager!.desiredAccuracy = kCLLocationAccuracyBest
             locationManager!.requestAlwaysAuthorization()
+            view.backgroundColor = UIColor.grayColor()
         }
         locationManager!.startUpdatingLocation()
         
@@ -72,7 +76,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
             locationManager!.stopUpdatingLocation()
         }
     }
-    
+        
     
     //store finalized user location
     //then saves users and fetches events
@@ -94,16 +98,13 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         //reverseGeocode to find city
         let geoCoder = CLGeocoder()
-        var longitude :CLLocationDegrees = -122.0312186
-        var latitude :CLLocationDegrees = 37.33233141
-        var location = CLLocation(latitude: latitude, longitude: longitude)
-//        if var location = appDelegate.currentLocation as CLLocation? {
-//            print("no location")
-//            return
-//        }
+//        var longitude :CLLocationDegrees = -122.0312186
+//        var latitude :CLLocationDegrees = 37.33233141
+//        var location = CLLocation(latitude: latitude, longitude: longitude)
+        var location = appDelegate.currentLocation
 
         
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+        geoCoder.reverseGeocodeLocation(location!, completionHandler: { (placemarks, error) -> Void in
             
             // Place details
             var placeMark: CLPlacemark!

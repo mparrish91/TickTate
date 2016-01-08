@@ -22,8 +22,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Because I need to know where you are</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>TickTate finds the latest nearby concerts and events for you.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
