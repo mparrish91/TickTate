@@ -24,6 +24,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     override func viewDidLoad() {
         
+        super.viewDidLoad()
+        
 //        var user = PFUser()
 //        user.username = "malcolm"
 //        user.password = "12345"
@@ -41,53 +43,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         var currentUser = PFUser.currentUser()
         startUpdate()
-        
-        let geoCoder = CLGeocoder()
-        
-        var longitude :CLLocationDegrees = -122.0312186
-        var latitude :CLLocationDegrees = 37.33233141
-        
-        var location = CLLocation(latitude: latitude, longitude: longitude)
-//        let location = appDelegate.currentLocation
-        
-        
-        
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-            
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placemarks?[0]
-            
-            // Address dictionary
-            print(placeMark.addressDictionary)
-            
-            // Location name
-            if let locationName = placeMark.addressDictionary!["Name"] as? NSString {
-                print(locationName)
-            }
-            
-            // Street address
-            if let street = placeMark.addressDictionary!["Thoroughfare"] as? NSString {
-                print(street)
-            }
-            
-            // City
-            if let city = placeMark.addressDictionary!["City"] as? NSString {
-                print(city)
-                self.title = city as String
-            }
-            
-            // Zip code
-            if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
-                print(zip)
-            }
-            
-            // Country
-            if let country = placeMark.addressDictionary!["Country"] as? NSString {
-                print(country)
-            }
-            
-        })
 
     }
     
@@ -98,9 +53,11 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     func startUpdate() {
         
-        if locationManager != nil {
-            locationManager!.stopUpdatingLocation()
-        }else{
+        if CLLocationManager.locationServicesEnabled() {
+            print("enabled")
+            if locationManager != nil {
+                locationManager!.stopUpdatingLocation()
+            }else {
             locationManager = CLLocationManager()
             locationManager!.delegate = self
             locationManager!.desiredAccuracy = kCLLocationAccuracyBest
@@ -133,7 +90,34 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         //users current location
         appDelegate.currentLocation = newLocation
-    
+        
+        
+        //reverseGeocode to find city
+        let geoCoder = CLGeocoder()
+        var longitude :CLLocationDegrees = -122.0312186
+        var latitude :CLLocationDegrees = 37.33233141
+        var location = CLLocation(latitude: latitude, longitude: longitude)
+//        if var location = appDelegate.currentLocation as CLLocation? {
+//            print("no location")
+//            return
+//        }
+
+        
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            
+            // Place details
+            var placeMark: CLPlacemark!
+            placeMark = placemarks?[0]
+            
+            // City
+            if let city = placeMark.addressDictionary!["City"] as? NSString {
+                print(city)
+                self.title = city as String
+            }
+            
+        })
+
+
         stopUpdate()
         
         let thisUser = ParseHelper().loggedInUser
