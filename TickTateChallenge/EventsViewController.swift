@@ -19,6 +19,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var eventsArray: [[String: AnyObject]] = []
     var RANGE_IN_MILES: CLLocationDistance = 25
+    var loggedInUser: PFUser?
     
     @IBOutlet weak var eventsTableView: UITableView!
     
@@ -40,11 +41,28 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 //            }
 //        }
         
-        
-        var currentUser = PFUser.currentUser()
+        if checkUserCredentials() != false {
+            loggedInUser = PFUser.currentUser()
+            print(loggedInUser)
+        }
         startUpdate()
 
     }
+    
+    func checkUserCredentials() -> Bool {
+        do {
+            try PFUser.logInWithUsername("malcolm", password: "12345")
+        }
+        catch _ {
+            // Error handling
+        }
+        
+        if (User.currentUser() != nil) {
+            return true
+        }
+        return false
+    }
+    
     
     func didLogin() {
         startUpdate()
@@ -95,13 +113,10 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         //users current location
         appDelegate.currentLocation = newLocation
         
-        
         //reverseGeocode to find city
         let geoCoder = CLGeocoder()
-//        var longitude :CLLocationDegrees = -122.0312186
-//        var latitude :CLLocationDegrees = 37.33233141
-//        var location = CLLocation(latitude: latitude, longitude: longitude)
         var location = appDelegate.currentLocation
+        print(location)
 
         
         geoCoder.reverseGeocodeLocation(location!, completionHandler: { (placemarks, error) -> Void in
@@ -112,7 +127,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
             
             // City
             if let city = placeMark.addressDictionary!["City"] as? NSString {
-                print(city)
                 self.title = city as String
             }
             
@@ -121,7 +135,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 
         stopUpdate()
         
-        let thisUser = ParseHelper().loggedInUser
+        let thisUser = loggedInUser
+        print(thisUser)
         ParseHelper.saveUserWithLocationToParse(thisUser, geopoint: PFGeoPoint(location: appDelegate.currentLocation))
         self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, bRefreshUI: true)
     }
@@ -140,21 +155,26 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         eventsArray.removeAll()
         eventsTableView.reloadData()
 
-        query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
+        query.findObjectsInBackgroundWithBlock {(objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
                 for object in objects! {
                     
                     let eventID = object["eventID"]
+                    print(eventID)
+
                     let venue = object["venue"]
+                    print(venue)
+
 //                    let date = object["date"] as! NSDate
                     let city = object["city"]
+                    print(city)
+
                     let artist = object["artist"]
                     print(artist)
 
                     var dict = [String: AnyObject]()
                     dict["eventID"] = eventID
                     dict["artist"] = artist
-                    
                     self.eventsArray.append(dict)
                 }
                 
