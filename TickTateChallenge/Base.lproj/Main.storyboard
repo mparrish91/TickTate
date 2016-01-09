@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="hkA-KC-0mr" detailTextLabel="jGE-4s-NkH" style="IBUITableViewCellStyleValue1" id="UVn-76-Zui">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UVn-76-Zui" id="VCw-hd-izp">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -110,7 +110,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="QcW-BD-nTY">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QcW-BD-nTY" id="oGp-LR-Y2H">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -128,11 +128,12 @@
                     </view>
                     <connections>
                         <outlet property="citiesTableView" destination="Nwq-dg-e8A" id="MXJ-XG-QPi"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="eventsSegue" id="Ohl-9E-tZD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3eX-Ub-u4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2267" y="1001"/>
+            <point key="canvasLocation" x="2411" y="1009"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vTi-Cr-qQE">
@@ -153,4 +154,7 @@
             <point key="canvasLocation" x="713" y="1001"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ohl-9E-tZD"/>
+    </inferredMetricsTieBreakers>
 </document>

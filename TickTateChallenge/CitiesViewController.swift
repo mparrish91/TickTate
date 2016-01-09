@@ -47,8 +47,21 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let currentCell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell!;
+        
+        var myArea = currentCell.textLabel!.text
+        performSegueWithIdentifier("eventsSegue", sender: self)
+        
+        
     }
 
-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "eventsSegue" {
+            var eventsVC = segue.destinationViewController as EventsViewController
+            eventsVC.selectedCity = myArea
+            
+        }
+    }
 
 }

@@ -20,6 +20,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var eventsArray: [[String: AnyObject]] = []
     var RANGE_IN_MILES: CLLocationDistance = 25
     var loggedInUser: PFUser?
+    var selectedCity: String?
     
     @IBOutlet weak var eventsTableView: UITableView!
     
@@ -248,14 +249,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "CitiesSegue" {
-            print("segue")
-//            if let destinationVC = segue.destinationViewController as? CitiesViewController{
-//                destinationVC.numberToDisplay = counter
-            
-        }
-    }
+
     
     
 
