@@ -165,7 +165,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                     let venue = object["venue"]
                     print(venue)
 
-//                    let date = object["date"] as! NSDate
+                    let date = object["date"] as! NSDate
                     let city = object["city"]
                     print(city)
 
@@ -197,12 +197,18 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         cell?.backgroundColor = UIColor.clearColor()
         
         let dict = eventsArray[indexPath.row]
-        print(dict)
 
         let artist = dict["artist"] as! String
-        print(artist)
+        let date = dict["artist"] as! NSDate
+        
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+        var convertedDate = dateFormatter.stringFromDate(date)
 
         cell?.textLabel!.text = artist
+        cell?.detailTextLabel!.text = convertedDate
+
 
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
         cell?.contentView.backgroundColor = UIColor.clearColor()
