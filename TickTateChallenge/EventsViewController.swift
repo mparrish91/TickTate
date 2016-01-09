@@ -160,24 +160,19 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                 for object in objects! {
                     
                     let eventID = object["eventID"]
-//                    print(eventID)
+                    print(eventID)
 
                     let venue = object["venue"]
-//                    print(venue)
+                    print(venue)
 
-//                    let date = object["date"] as! String
-//                    let dateFormatter = NSDateFormatter()
-//                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"
-//                    let converteddate = dateFormatter.stringFromDate(date as! NSDate)
+                    let date = object["date"]
                     print(date)
-
-
                     
                     let city = object["city"]
-//                    print(city)
+                    print(city)
 
                     let artist = object["artist"]
-//                    print(artist)
+                    print(artist)
 
                     var dict = [String: AnyObject]()
                     dict["eventID"] = eventID
@@ -206,12 +201,21 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let dict = eventsArray[indexPath.row]
 
         let artist = dict["artist"] as! String
-//        let date = dict["artist"] as! String
+        let date = dict["date"]
         
-//        var strDate = date
+//        convert Parse date into NSDate
+        
 //        let dateFormatter = NSDateFormatter()
 //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-////        dateFormatter.dateFormat = "h:mm a"
+//        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSxxx"
+//        let converteddate = dateFormatter.dateFromString(date as! NSDate)
+//
+//        print(converteddate)
+        
+        
+        //convert NSDate into formatted string
+
+
 ////        dateFormatter.timeZone = NSTimeZone(name:"UTC")
 //        let convertedDate = dateFormatter.dateFromString(strDate) as NSDate!
 //        let finalconvertedDate = dateFormatter.stringFromDate(convertedDate)
@@ -246,9 +250,10 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CitiesSegue" {
-            if let destinationVC = segue.destinationViewController as? CitiesViewController{
+            print("segue")
+//            if let destinationVC = segue.destinationViewController as? CitiesViewController{
 //                destinationVC.numberToDisplay = counter
-            }
+            
         }
     }
     

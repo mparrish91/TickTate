@@ -18,8 +18,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     override func viewDidLoad() {
-        
-        self.viewDidLoad()
+        super.viewDidLoad()
         
         self.title = "Cities"
     }
