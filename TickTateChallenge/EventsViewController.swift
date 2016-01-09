@@ -241,13 +241,16 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     }
     
     
-    func loadSelectedCity(city: String) {
+    func loadSelectedCity(var city: String) {
         let geoCoder = CLGeocoder()
+        
+        city = "1 Infinite Loop, Cupertino, CA"
         
         geoCoder.geocodeAddressString(city) { (placemarks, error) -> Void in
             if let firstPlacemark = placemarks?[0] {
                 print(firstPlacemark)
                 self.selectedLocation = firstPlacemark.location
+                print(self.selectedLocation)
 
             }
         }
