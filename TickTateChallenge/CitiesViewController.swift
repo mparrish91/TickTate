@@ -13,6 +13,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     var citiesArray = ["New York", "Oakland", "Los Angeles", "Miami", "Las Vegas", "San Francisco"]
+    var myArea: String?
 
     @IBOutlet weak var citiesTableView: UITableView!
     
@@ -49,7 +50,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let currentCell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell!;
         
-        var myArea = currentCell.textLabel!.text
+        myArea = currentCell.textLabel!.text
         performSegueWithIdentifier("eventsSegue", sender: self)
         
         
@@ -58,7 +59,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "eventsSegue" {
-            var eventsVC = segue.destinationViewController as EventsViewController
+            var eventsVC = segue.destinationViewController as! EventsViewController
             eventsVC.selectedCity = myArea
             
         }

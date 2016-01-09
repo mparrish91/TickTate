@@ -21,6 +21,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var RANGE_IN_MILES: CLLocationDistance = 25
     var loggedInUser: PFUser?
     var selectedCity: String?
+    var selectedLocation: CLLocation?
     
     @IBOutlet weak var eventsTableView: UITableView!
     
@@ -28,20 +29,11 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         super.viewDidLoad()
         
-//        var user = PFUser()
-//        user.username = "malcolm"
-//        user.password = "12345"
-//        user.email = "email@example.com"
-//        
-//        user.signUpInBackgroundWithBlock {
-//            (succeeded: Bool, error: NSError?) -> Void in
-//            if error == nil {
-//                // Hooray! Let them use the app now.
-//                print("user Saved")
-//            } else {
-//            }
-//        }
-        
+        if selectedCity != nil {
+            loadSelectedCity(selectedCity!)
+            self.fireNearEventsQuery(RANGE_IN_MILES, argCoord:selectedLocation?.coordinate, bRefreshUI: true)
+        }
+
         if checkUserCredentials() != false {
             loggedInUser = PFUser.currentUser()
             print(loggedInUser)
@@ -249,9 +241,42 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     }
     
     
+    func loadSelectedCity(city: String) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.geocodeAddressString(city) { (placemarks, error) -> Void in
+            if let firstPlacemark = placemarks?[0] {
+                print(firstPlacemark)
+                self.selectedLocation = firstPlacemark.location
 
+            }
+        }
+        
+        
+    }
     
     
 
 
 }
+
+
+
+
+
+//create user
+
+//        var user = PFUser()
+//        user.username = "malcolm"
+//        user.password = "12345"
+//        user.email = "email@example.com"
+//
+//        user.signUpInBackgroundWithBlock {
+//            (succeeded: Bool, error: NSError?) -> Void in
+//            if error == nil {
+//                // Hooray! Let them use the app now.
+//                print("user Saved")
+//            } else {
+//            }
+//        }
+
