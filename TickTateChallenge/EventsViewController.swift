@@ -127,7 +127,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
             
             // City
             if let city = placeMark.addressDictionary!["City"] as? NSString {
-                self.title = city as String
+                self.title = "Ticktate - " + (city as String)
             }
             
         })
@@ -160,17 +160,24 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                 for object in objects! {
                     
                     let eventID = object["eventID"]
-                    print(eventID)
+//                    print(eventID)
 
                     let venue = object["venue"]
-                    print(venue)
+//                    print(venue)
 
-                    let date = object["date"] as! NSDate
+//                    let date = object["date"] as! String
+//                    let dateFormatter = NSDateFormatter()
+//                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"
+//                    let converteddate = dateFormatter.stringFromDate(date as! NSDate)
+                    print(date)
+
+
+                    
                     let city = object["city"]
-                    print(city)
+//                    print(city)
 
                     let artist = object["artist"]
-                    print(artist)
+//                    print(artist)
 
                     var dict = [String: AnyObject]()
                     dict["eventID"] = eventID
@@ -199,15 +206,24 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let dict = eventsArray[indexPath.row]
 
         let artist = dict["artist"] as! String
-        let date = dict["artist"] as! NSDate
+//        let date = dict["artist"] as! String
+        
+//        var strDate = date
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+////        dateFormatter.dateFormat = "h:mm a"
+////        dateFormatter.timeZone = NSTimeZone(name:"UTC")
+//        let convertedDate = dateFormatter.dateFromString(strDate) as NSDate!
+//        let finalconvertedDate = dateFormatter.stringFromDate(convertedDate)
+//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+//        print(date)
+
         
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
-        var convertedDate = dateFormatter.stringFromDate(date)
+//        var convertedDate = dateFormatter.stringFromDate(date)
 
         cell?.textLabel!.text = artist
-        cell?.detailTextLabel!.text = convertedDate
+//        cell?.detailTextLabel!.text = date
 
 
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
@@ -227,6 +243,14 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "CitiesSegue" {
+            if let destinationVC = segue.destinationViewController as? CitiesViewController{
+//                destinationVC.numberToDisplay = counter
+            }
+        }
+    }
     
     
 

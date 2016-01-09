@@ -14,6 +14,15 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var citiesArray = ["New York", "Oakland", "Los Angeles", "Miami", "Las Vegas", "San Francisco"]
 
+    @IBOutlet weak var citiesTableView: UITableView!
+    
+    
+    override func viewDidLoad() {
+        
+        self.viewDidLoad()
+        
+        self.title = "Cities"
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
