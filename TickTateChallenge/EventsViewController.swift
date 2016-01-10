@@ -214,7 +214,10 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                 if ((bRefreshUI) != nil)
                 {
                     self.eventsTableView.reloadData()
-                    self.title = self.selectedCity
+                    if self.selectedCity != nil {
+                        self.title = "Ticktate - " + self.selectedCity!
+                    }
+
                 }
             }
             
