@@ -38,8 +38,22 @@ class MyCityPromptVC: UIViewController {
                 (success: Bool, error: NSError?) -> Void in
                 if (success) {
                     // The object has been saved.
+                    print("User city saved")
+                    
+                    //throw Alert Controller
+
+                    let alertController = UIAlertController(title: "Thank you", message: "We have noted your submission", preferredStyle: .Alert)
+                    
+                    
+                    let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
+                        print("you have pressed OK button");
+                    }
+                    alertController.addAction(OKAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion:nil)
                 } else {
                     // There was a problem, check error.description
+                    print(error?.description)
                 }
             }
 

@@ -188,8 +188,6 @@
                     </view>
                     <connections>
                         <outlet property="myCityTextField" destination="fWH-vm-QtO" id="pzB-NT-h0W"/>
-                        <outlet property="onSubmitButtonPressed" destination="cZ3-v0-xID" id="ur4-44-iXT"/>
-                        <outlet property="submitButton" destination="cZ3-v0-xID" id="Tsd-Uw-XOe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oni-lI-gTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
