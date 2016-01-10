@@ -12,21 +12,17 @@ import Parse
 
 
 
-
 class EventsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var locationManager:CLLocationManager?
-    var locationRecieved: Bool?
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var eventsArray: [[String: AnyObject]] = []
     var RANGE_IN_MILES: CLLocationDistance = 25
     var loggedInUser: PFUser?
     var selectedCity: String?
     var selectedLocation: CLLocation?
-    
     var userCity: String?
     
-
     
     @IBOutlet weak var eventsTableView: UITableView!
     
@@ -49,8 +45,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 
 
     func postNewEventsForCity() {
-        
-        print(self.selectedLocation)
         self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
         
     }
@@ -95,53 +89,20 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) { switch status {
         
         case .NotDetermined:
-        // If status has not yet been determied, ask for authorization
         break
         case .AuthorizedAlways:
-        // If always authorized
         manager.startUpdatingLocation()
-
-        
-        break
-        case .Restricted:
-        // If restricted by e.g. parental controls. User can't enable Location Services
         break
         case .Denied:
-        // If user denied your app access to Location Services, but can grant access from Settings.app
-        //permission not granted load sorryview
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
-        //            self.presentViewController(vc, animated: true, completion: nil)
-        self.navigationController?.showViewController(vc, sender: nil)
-        vc.title = "Ticktate"
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
+            self.navigationController?.showViewController(vc, sender: nil)
+            vc.title = "Ticktate"
         break
         default:
         break
         }
         }
-    
-    
-    
-    
-//    {
-//        if status == .AuthorizedAlways {
-////            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-////                if CLLocationManager.isRangingAvailable() {
-////                    // do stuff
-////                }
-////            }
-//            locationManager!.startUpdatingLocation()
-//
-//        }else {
-//            //permission not granted load sorryview
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
-////            self.presentViewController(vc, animated: true, completion: nil)
-//            self.navigationController?.showViewController(vc, sender: nil)
-//            vc.title = "Ticktate"
-//        }
-//    }
-//    
     
     func stopUpdate() {
         if (locationManager != nil) {
@@ -164,15 +125,12 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         print(NSString(format: "## Latitude :%.0f", newLocation.coordinate.latitude))
         print(NSString(format: "## Longtitude :%.0f", newLocation.coordinate.longitude))
         
-        //users current location
         appDelegate.currentLocation = newLocation
         
-        //reverseGeocode to find city
         let geoCoder = CLGeocoder()
         var location = appDelegate.currentLocation
-        print(location)
-
         
+        //reverse geocode to find city
         geoCoder.reverseGeocodeLocation(location!, completionHandler: { (placemarks, error) -> Void in
             if let marks = placemarks {
                 if marks.count > 0 {
@@ -183,15 +141,13 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                     
                     // City
                     if let city = placeMark.addressDictionary!["City"] as? NSString {
-                        self.userCity = city as String
                         
                         //if else check if current location is in supported location
                         //if not present other view
                         
                         let cities = CitiesViewController()
-                        
-                        if cities.citiesArray.contains(self.userCity!) {
-                            self.title = "Ticktate - " + (self.userCity! as String)
+                        if cities.citiesArray.contains(city as String) {
+                            self.title = "Ticktate - " + (city as String)
                             
                         }else {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -209,34 +165,10 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         })
         
         
-        
-
-
-        
         stopUpdate()
         
         let thisUser = loggedInUser
-        print(thisUser)
         ParseHelper.saveUserWithLocationToParse(thisUser, geopoint: PFGeoPoint(location: appDelegate.currentLocation))
-        
-        //if else check if current location is in supported location
-        //if not present other view
-        
-        //convert location(CLLocation) itno city
-        
-//        let cities = CitiesViewController()
-//        
-//        if cities.citiesArray.contains(userCity!) {
-//            self.title = "Ticktate - " + (userCity! as String)
-//
-//        }else {
-//            let storyboard = UIStoryboard(name: "MyStoryboardName", bundle: nil)
-//            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
-//            self.presentViewController(vc, animated: true, completion: nil)
-//            vc.title = "Ticktate"
-//
-//        }
-        
         self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, bRefreshUI: true)
     }
     
@@ -250,7 +182,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let query = PFQuery(className: "Events")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: (argCoord?.latitude)!, longitude: (argCoord?.longitude)!), withinMiles: miles!)
         
-        //delete existing rows
         eventsArray.removeAll()
         eventsTableView.reloadData()
 
@@ -283,6 +214,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                 if ((bRefreshUI) != nil)
                 {
                     self.eventsTableView.reloadData()
+                    self.title = self.selectedCity
                 }
             }
             
@@ -303,19 +235,12 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let artist = dict["artist"] as! String
         let date = dict["date"] as! NSDate
         
-        
-
-        
-//        convert Parse date into NSDate
-        
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd"
         let dateText = dateFormatter.stringFromDate(date)
         
         cell?.textLabel!.text = artist
         cell?.detailTextLabel!.text = dateText
-
-
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
         cell?.contentView.backgroundColor = UIColor.clearColor()
         
