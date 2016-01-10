@@ -34,8 +34,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "postNewEventsForCity", name:"cityLoaded", object: nil)
-
+        //if the user selects a city from our menu
         if selectedCity != nil {
             loadSelectedCity(selectedCity!)
         }
@@ -71,11 +70,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     }
     
     
-    func didLogin() {
-        startUpdate()
-    }
-    
-    
     func startUpdate() {
         
         if CLLocationManager.locationServicesEnabled() {
@@ -91,29 +85,63 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
             locationManager!.desiredAccuracy = kCLLocationAccuracyBest
             locationManager!.requestAlwaysAuthorization()
             view.backgroundColor = UIColor.grayColor()
+
         }
         locationManager!.startUpdatingLocation()
+
         
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedAlways {
-//            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-//                if CLLocationManager.isRangingAvailable() {
-//                    // do stuff
-//                }
-//            }
-        }else {
-            //permission not granted load sorryview
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
-//            self.presentViewController(vc, animated: true, completion: nil)
-            self.navigationController?.showViewController(vc, sender: nil)
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) { switch status {
+        
+        case .NotDetermined:
+        // If status has not yet been determied, ask for authorization
+        break
+        case .AuthorizedAlways:
+        // If always authorized
+        manager.startUpdatingLocation()
 
-            vc.title = "Ticktate"
+        
+        break
+        case .Restricted:
+        // If restricted by e.g. parental controls. User can't enable Location Services
+        break
+        case .Denied:
+        // If user denied your app access to Location Services, but can grant access from Settings.app
+        //permission not granted load sorryview
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
+        //            self.presentViewController(vc, animated: true, completion: nil)
+        self.navigationController?.showViewController(vc, sender: nil)
+        vc.title = "Ticktate"
+        break
+        default:
+        break
         }
-    }
+        }
     
+    
+    
+    
+//    {
+//        if status == .AuthorizedAlways {
+////            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
+////                if CLLocationManager.isRangingAvailable() {
+////                    // do stuff
+////                }
+////            }
+//            locationManager!.startUpdatingLocation()
+//
+//        }else {
+//            //permission not granted load sorryview
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
+////            self.presentViewController(vc, animated: true, completion: nil)
+//            self.navigationController?.showViewController(vc, sender: nil)
+//            vc.title = "Ticktate"
+//        }
+//    }
+//    
     
     func stopUpdate() {
         if (locationManager != nil) {
@@ -281,31 +309,9 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 //        convert Parse date into NSDate
         
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-//        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSxxx"
-//        let converteddate = dateFormatter.dateFromString(date as! NSDate)
-//
-//        print(converteddate)
-        
-        
-        //convert NSDate into formatted string
-
-
-////        dateFormatter.timeZone = NSTimeZone(name:"UTC")
-//        let convertedDate = dateFormatter.dateFromString(strDate) as NSDate!
-//        let finalconvertedDate = dateFormatter.stringFromDate(convertedDate)
-//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        
-        
         dateFormatter.dateFormat = "MM/dd"
-        
-        print(date)
-        
         let dateText = dateFormatter.stringFromDate(date)
         
-        
-//        var convertedDate = dateFormatter.stringFromDate(date)
-
         cell?.textLabel!.text = artist
         cell?.detailTextLabel!.text = dateText
 
@@ -333,37 +339,18 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         geoCoder.geocodeAddressString(city) { (placemarks, error) -> Void in
             if let marks = placemarks {
-//            if let firstPlacemark = placemarks?[0] {
-//                self.selectedLocation = firstPlacemark.location
                 if marks.count > 0 {
                     self.selectedLocation = marks[0].location
-                    print(self.selectedLocation)
-
-//                    NSNotificationCenter.defaultCenter().postNotificationName("cityLoaded", object: nil)
                      self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
+                }else{
+                    print(error?.description)
                 }
-                // should handle error here if no placemarks
             }
+        
+            
         }
-       
-
-        
         
     }
-    
-    
-    
-    func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(),
-            closure
-        )
-    }
-    
 
 
 }
