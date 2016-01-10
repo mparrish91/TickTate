@@ -23,15 +23,18 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var selectedCity: String?
     var selectedLocation: CLLocation?
     
+
+    
     @IBOutlet weak var eventsTableView: UITableView!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "postNewEventsForCity", name:"cityLoaded", object: nil)
+
         if selectedCity != nil {
             loadSelectedCity(selectedCity!)
-            self.fireNearEventsQuery(RANGE_IN_MILES, argCoord:selectedLocation?.coordinate, bRefreshUI: true)
         }
 
         if checkUserCredentials() != false {
@@ -40,6 +43,14 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         }
         startUpdate()
 
+        }
+
+
+    func postNewEventsForCity() {
+        
+        print(self.selectedLocation)
+        self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
+        
     }
     
     func checkUserCredentials() -> Bool {
@@ -131,6 +142,9 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let thisUser = loggedInUser
         print(thisUser)
         ParseHelper.saveUserWithLocationToParse(thisUser, geopoint: PFGeoPoint(location: appDelegate.currentLocation))
+        
+        //if else check if current location is in supported location
+        //if not present other view
         self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, bRefreshUI: true)
     }
     
@@ -159,7 +173,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                     print(venue)
 
                     let date = object["date"]
-                    print(date)
+                    print("date \(date)")
                     
                     let city = object["city"]
                     print(city)
@@ -170,6 +184,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                     var dict = [String: AnyObject]()
                     dict["eventID"] = eventID
                     dict["artist"] = artist
+                    dict["date"] = date
                     self.eventsArray.append(dict)
                 }
                 
@@ -194,11 +209,14 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let dict = eventsArray[indexPath.row]
 
         let artist = dict["artist"] as! String
-        let date = dict["date"]
+        let date = dict["date"] as! NSDate
+        
+        
+
         
 //        convert Parse date into NSDate
         
-//        let dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
 //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
 //        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSxxx"
 //        let converteddate = dateFormatter.dateFromString(date as! NSDate)
@@ -213,14 +231,19 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 //        let convertedDate = dateFormatter.dateFromString(strDate) as NSDate!
 //        let finalconvertedDate = dateFormatter.stringFromDate(convertedDate)
 //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-//        print(date)
-
+        
+        
+        dateFormatter.dateFormat = "MM/dd"
+        
+        print(date)
+        
+        let dateText = dateFormatter.stringFromDate(date)
         
         
 //        var convertedDate = dateFormatter.stringFromDate(date)
 
         cell?.textLabel!.text = artist
-//        cell?.detailTextLabel!.text = date
+        cell?.detailTextLabel!.text = dateText
 
 
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
@@ -241,23 +264,41 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     }
     
     
-    func loadSelectedCity(var city: String) {
+    func loadSelectedCity(city: String) {
         let geoCoder = CLGeocoder()
         
-        city = "1 Infinite Loop, Cupertino, CA"
-        
         geoCoder.geocodeAddressString(city) { (placemarks, error) -> Void in
-            if let firstPlacemark = placemarks?[0] {
-                print(firstPlacemark)
-                self.selectedLocation = firstPlacemark.location
-                print(self.selectedLocation)
+            if let marks = placemarks {
+//            if let firstPlacemark = placemarks?[0] {
+//                self.selectedLocation = firstPlacemark.location
+                if marks.count > 0 {
+                    self.selectedLocation = marks[0].location
+                    print(self.selectedLocation)
 
+//                    NSNotificationCenter.defaultCenter().postNotificationName("cityLoaded", object: nil)
+                     self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
+                }
+                // should handle error here if no placemarks
             }
         }
+       
+
         
         
     }
     
+    
+    
+    func delay(delay: Double, closure: ()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(),
+            closure
+        )
+    }
     
 
 
