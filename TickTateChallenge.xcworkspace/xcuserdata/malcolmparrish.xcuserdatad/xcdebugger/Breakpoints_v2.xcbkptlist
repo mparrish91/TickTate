@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474093663.000919"
+            timestampString = "474145125.234122"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "postNewEventsForCity()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474093663.000919"
+            timestampString = "474145125.234122"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474094135.710783"
+            timestampString = "474149076.216238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
             landmarkName = "loadSelectedCity(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474094135.710783"
+            timestampString = "474149076.216238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "loadSelectedCity(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474094135.710783"
+            timestampString = "474149076.216238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "loadSelectedCity(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474093663.000919"
+            timestampString = "474149076.216238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "fireNearEventsQuery(_:argCoord:bRefreshUI:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,29 +106,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474093852.082103"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "fireNearEventsQuery(_:argCoord:bRefreshUI:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTateChallenge/EventsViewController.swift"
-            timestampString = "474094135.710783"
+            timestampString = "474149076.216238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "242"
             endingLineNumber = "242"
+            landmarkName = "fireNearEventsQuery(_:argCoord:bRefreshUI:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TickTateChallenge/EventsViewController.swift"
+            timestampString = "474149076.216238"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TickTateChallenge/EventsViewController.swift"
+            timestampString = "474149076.216238"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "locationManager(_:didUpdateToLocation:fromLocation:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TickTateChallenge.EventsViewController.locationManager (TickTateChallenge.EventsViewController)(__ObjC.CLLocationManager, didUpdateToLocation : __ObjC.CLLocation, fromLocation : __ObjC.CLLocation) -&gt; ()"
+                  moduleName = "TickTateChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/malcolmparrish/Desktop/iOS/TickTateChallenge/TickTateChallenge/EventsViewController.swift"
+                  timestampString = "474146456.157204"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "129"
+                  endingLineNumber = "129"
+                  offsetFromSymbolStart = "1136">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TickTateChallenge.EventsViewController.(locationManager (TickTateChallenge.EventsViewController) -&gt; (__ObjC.CLLocationManager, didUpdateToLocation : __ObjC.CLLocation, fromLocation : __ObjC.CLLocation) -&gt; ()).(closure #1)"
+                  moduleName = "TickTateChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/malcolmparrish/Desktop/iOS/TickTateChallenge/TickTateChallenge/EventsViewController.swift"
+                  timestampString = "474146456.157353"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "130"
+                  endingLineNumber = "130"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

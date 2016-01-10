@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreLocation
-
 import Parse
+
+
 
 
 class EventsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -22,6 +23,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     var loggedInUser: PFUser?
     var selectedCity: String?
     var selectedLocation: CLLocation?
+    
+    var userCity: String?
     
 
     
@@ -93,6 +96,25 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
     }
     
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedAlways {
+//            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
+//                if CLLocationManager.isRangingAvailable() {
+//                    // do stuff
+//                }
+//            }
+        }else {
+            //permission not granted load sorryview
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
+//            self.presentViewController(vc, animated: true, completion: nil)
+            self.navigationController?.showViewController(vc, sender: nil)
+
+            vc.title = "Ticktate"
+        }
+    }
+    
+    
     func stopUpdate() {
         if (locationManager != nil) {
             locationManager!.stopUpdatingLocation()
@@ -124,19 +146,45 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 
         
         geoCoder.reverseGeocodeLocation(location!, completionHandler: { (placemarks, error) -> Void in
-            
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placemarks?[0]
-            
-            // City
-            if let city = placeMark.addressDictionary!["City"] as? NSString {
-                self.title = "Ticktate - " + (city as String)
+            if let marks = placemarks {
+                if marks.count > 0 {
+                    
+                    // Place details
+                    var placeMark: CLPlacemark!
+                    placeMark = placemarks?[0]
+                    
+                    // City
+                    if let city = placeMark.addressDictionary!["City"] as? NSString {
+                        self.userCity = city as String
+                        
+                        //if else check if current location is in supported location
+                        //if not present other view
+                        
+                        let cities = CitiesViewController()
+                        
+                        if cities.citiesArray.contains(self.userCity!) {
+                            self.title = "Ticktate - " + (self.userCity! as String)
+                            
+                        }else {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
+                            self.navigationController?.showViewController(vc, sender: nil)
+                            vc.title = "Ticktate"
+                            
+                        }
+                    }
+                    // should handle error here if no placemarks
+                }else {
+                    print(error?.description)
+                }
             }
-            
         })
+        
+        
+        
 
 
+        
         stopUpdate()
         
         let thisUser = loggedInUser
@@ -145,6 +193,22 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         //if else check if current location is in supported location
         //if not present other view
+        
+        //convert location(CLLocation) itno city
+        
+//        let cities = CitiesViewController()
+//        
+//        if cities.citiesArray.contains(userCity!) {
+//            self.title = "Ticktate - " + (userCity! as String)
+//
+//        }else {
+//            let storyboard = UIStoryboard(name: "MyStoryboardName", bundle: nil)
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("sorryVC") as! UIViewController
+//            self.presentViewController(vc, animated: true, completion: nil)
+//            vc.title = "Ticktate"
+//
+//        }
+        
         self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, bRefreshUI: true)
     }
     

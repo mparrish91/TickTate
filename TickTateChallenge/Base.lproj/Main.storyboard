@@ -78,7 +78,7 @@
         <!--View Controller-->
         <scene sceneID="3Ds-tw-uM3">
             <objects>
-                <viewController id="Nbv-h4-0vh" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sorryVC" id="Nbv-h4-0vh" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kYa-35-Q6M"/>
                         <viewControllerLayoutGuide type="bottom" id="CgP-Cm-22D"/>
@@ -87,18 +87,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9G-lP-dpY">
-                                <rect key="frame" x="143" y="86" width="315" height="169"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">:( I hate to say it, but we are currently not yet available in your area.  But, that doesnt mean for long!                                                                       </string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k8A-P3-YeD">
-                                <rect key="frame" x="214" y="250" width="173" height="35"/>
+                                <rect key="frame" x="214" y="263" width="173" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="173" id="Pw0-3R-uuR"/>
-                                    <constraint firstAttribute="height" constant="35" id="UbZ-CH-H1I"/>
+                                    <constraint firstAttribute="height" constant="35" id="kYx-9X-HxM"/>
+                                    <constraint firstAttribute="width" constant="173" id="ovp-yM-jwE"/>
                                 </constraints>
                                 <state key="normal" title="Come to my area!"/>
                                 <connections>
@@ -113,28 +106,35 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tap below if you would like to request us in your area or view different areas" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uA2-1l-qO4">
-                                <rect key="frame" x="143" y="153" width="315" height="82"/>
+                                <rect key="frame" x="143" y="178" width="315" height="82"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9G-lP-dpY">
+                                <rect key="frame" x="143" y="92" width="315" height="68"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="315" id="QJt-lR-Prs"/>
+                                    <constraint firstAttribute="width" constant="315" id="0HO-AY-82b"/>
+                                    <constraint firstAttribute="height" constant="68" id="uVz-4W-hjh"/>
                                 </constraints>
+                                <string key="text">:( I hate to say it, but we are currently not yet available in your area.  But, that doesnt mean for long!                                                                       </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Z0b-eV-szv" firstAttribute="top" secondItem="Z9G-lP-dpY" secondAttribute="bottom" constant="57" id="4R9-8u-erg"/>
-                            <constraint firstItem="Z9G-lP-dpY" firstAttribute="top" secondItem="kYa-35-Q6M" secondAttribute="bottom" constant="66" id="D0o-cB-C5a"/>
-                            <constraint firstItem="Z0b-eV-szv" firstAttribute="top" secondItem="k8A-P3-YeD" secondAttribute="bottom" constant="27" id="EI6-8s-R3a"/>
-                            <constraint firstItem="Z9G-lP-dpY" firstAttribute="trailing" secondItem="uA2-1l-qO4" secondAttribute="trailing" id="NqE-hf-IlS"/>
-                            <constraint firstItem="Z9G-lP-dpY" firstAttribute="leading" secondItem="uA2-1l-qO4" secondAttribute="leading" id="RFL-Hm-HJs"/>
-                            <constraint firstItem="k8A-P3-YeD" firstAttribute="centerX" secondItem="uA2-1l-qO4" secondAttribute="centerX" id="ZB7-Ab-NYK"/>
-                            <constraint firstItem="CgP-Cm-22D" firstAttribute="top" secondItem="Z0b-eV-szv" secondAttribute="bottom" constant="258" id="l1A-1v-lES"/>
-                            <constraint firstItem="Z0b-eV-szv" firstAttribute="centerX" secondItem="k8A-P3-YeD" secondAttribute="centerX" id="lTd-6F-dOk"/>
-                            <constraint firstItem="uA2-1l-qO4" firstAttribute="top" secondItem="kYa-35-Q6M" secondAttribute="bottom" constant="133" id="npt-RG-dLC"/>
-                            <constraint firstItem="k8A-P3-YeD" firstAttribute="top" secondItem="uA2-1l-qO4" secondAttribute="bottom" constant="15" id="sYX-eZ-4q2"/>
-                            <constraint firstItem="uA2-1l-qO4" firstAttribute="centerX" secondItem="PGP-6T-NUO" secondAttribute="centerX" id="zZo-YD-Atz"/>
+                            <constraint firstItem="uA2-1l-qO4" firstAttribute="centerX" secondItem="PGP-6T-NUO" secondAttribute="centerX" id="0IN-8S-X6B"/>
+                            <constraint firstItem="CgP-Cm-22D" firstAttribute="top" secondItem="Z0b-eV-szv" secondAttribute="bottom" constant="258" id="DPj-Hi-lqU"/>
+                            <constraint firstItem="Z0b-eV-szv" firstAttribute="centerX" secondItem="k8A-P3-YeD" secondAttribute="centerX" id="E1a-13-SHF"/>
+                            <constraint firstItem="Z9G-lP-dpY" firstAttribute="leading" secondItem="uA2-1l-qO4" secondAttribute="leading" id="KQj-Fk-BHg"/>
+                            <constraint firstItem="k8A-P3-YeD" firstAttribute="top" secondItem="uA2-1l-qO4" secondAttribute="bottom" constant="3" id="dA8-v8-LwD"/>
+                            <constraint firstItem="Z9G-lP-dpY" firstAttribute="top" secondItem="kYa-35-Q6M" secondAttribute="bottom" constant="72" id="dEj-AO-3It"/>
+                            <constraint firstItem="k8A-P3-YeD" firstAttribute="centerX" secondItem="uA2-1l-qO4" secondAttribute="centerX" id="qUC-fi-QsW"/>
+                            <constraint firstItem="Z0b-eV-szv" firstAttribute="top" secondItem="k8A-P3-YeD" secondAttribute="bottom" constant="14" id="uDC-sj-y8A"/>
+                            <constraint firstItem="Z9G-lP-dpY" firstAttribute="trailing" secondItem="uA2-1l-qO4" secondAttribute="trailing" id="wFW-KF-FbJ"/>
+                            <constraint firstItem="uA2-1l-qO4" firstAttribute="top" secondItem="Z9G-lP-dpY" secondAttribute="bottom" constant="18" id="waZ-Fb-0QD"/>
                         </constraints>
                     </view>
                 </viewController>
