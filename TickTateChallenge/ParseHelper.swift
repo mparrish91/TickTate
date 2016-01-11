@@ -18,14 +18,14 @@ class ParseHelper: NSObject {
         
         var activeUser: PFObject?
         
-        let query = PFQuery(className: "ActiveUsers")
+        let query = PFQuery(className: "User")
         query.whereKey("userID", equalTo: user!.objectId!)
         query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
             if error == nil {
                 //if user is active user already, just update the entry
                 //otherwise create it.
                 if objects?.count == 0 {
-                    activeUser = PFObject(className: "ActiveUsers")
+                    activeUser = PFObject(className: "User")
                 }else{
                     activeUser = objects![0]
                 }
@@ -33,15 +33,16 @@ class ParseHelper: NSObject {
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 activeUser!["userID"] = user!.objectId
                 activeUser!["userTitle"] = appDelegate.userTitle
+                activeUser!["userLocation"] = geopoint
+
                 
                 activeUser!.saveInBackgroundWithBlock{ (success, error) -> Void in
                     
                     if success {
-                        print("activeUser saved: \(success)")
+                        print("User saved: \(success)")
                     }else{
                         let description = error?.localizedDescription
                         print(" \(description)")
-                        let msg  = "Save to ActiveUsers failed. \(description)"
                     }
                 }
             }
