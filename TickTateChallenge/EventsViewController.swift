@@ -38,7 +38,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         if checkUserCredentials() != false {
             loggedInUser = PFUser.currentUser()
-            print(loggedInUser)
         }
         startUpdate()
         
@@ -173,7 +172,6 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     func fireNearEventsQuery(distanceinMiles: CLLocationDistance?, argCoord: CLLocationCoordinate2D?, shouldRefreshUI: Bool?) {
         
         let miles = distanceinMiles
-        print("fireEventsWithinXMiles: \(miles)")
         
         let query = PFQuery(className: "Events")
         query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: (argCoord?.latitude)!, longitude: (argCoord?.longitude)!), withinMiles: miles!)
@@ -186,19 +184,10 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                 for object in objects! {
                     
                     let eventID = object["eventID"]
-                    print(eventID)
-                    
                     let venue = object["venue"]
-                    print(venue)
-                    
                     let date = object["date"]
-                    print("date \(date)")
-                    
                     let city = object["city"]
-                    print(city)
-                    
                     let artist = object["artist"]
-                    print(artist)
                     
                     var dict = [String: AnyObject]()
                     dict["eventID"] = eventID

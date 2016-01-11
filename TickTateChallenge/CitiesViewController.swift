@@ -26,17 +26,19 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        cell?.backgroundColor = UIColor.clearColor()
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+            else{
+                return UITableViewCell()
+        }
+        cell.backgroundColor = UIColor.clearColor()
         
-        cell?.textLabel!.text = citiesArray[indexPath.row]
+        cell.textLabel!.text = citiesArray[indexPath.row]
         
         
+        cell.textLabel?.font = UIFont(name: "Verdana", size: 13)
+        cell.contentView.backgroundColor = UIColor.clearColor()
         
-        cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
-        cell?.contentView.backgroundColor = UIColor.clearColor()
-        
-        return cell!
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
