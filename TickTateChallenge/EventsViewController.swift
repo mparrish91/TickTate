@@ -18,6 +18,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var eventsArray: [[String: AnyObject]] = []
     let RANGE_IN_MILES: CLLocationDistance = 25
+    let cellDateFormatter = NSDateFormatter()
     var loggedInUser: PFUser?
     var selectedCity: String?
     var selectedLocation: CLLocation?
@@ -45,7 +46,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
 
 
     func postNewEventsForCity() {
-        self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
+        self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, shouldRefreshUI: true)
         
     }
     
@@ -56,7 +57,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         catch _ {
             // Error handling
         }
-        
+    
         if (User.currentUser() != nil) {
             return true
         }
@@ -164,12 +165,12 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         
         let thisUser = loggedInUser
         ParseHelper.saveUserWithLocationToParse(thisUser, geopoint: PFGeoPoint(location: appDelegate.currentLocation))
-        self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, bRefreshUI: true)
+        self.fireNearEventsQuery(RANGE_IN_MILES, argCoord: appDelegate.currentLocation?.coordinate, shouldRefreshUI: true)
     }
     
 
     //this method polls for events from sorrounding region
-    func fireNearEventsQuery(distanceinMiles: CLLocationDistance?, argCoord: CLLocationCoordinate2D?, bRefreshUI: Bool?) {
+    func fireNearEventsQuery(distanceinMiles: CLLocationDistance?, argCoord: CLLocationCoordinate2D?, shouldRefreshUI: Bool?) {
         
         let miles = distanceinMiles
         print("fireEventsWithinXMiles: \(miles)")
@@ -206,7 +207,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
                     self.eventsArray.append(dict)
                 }
                 
-                if ((bRefreshUI) != nil)
+                if ((shouldRefreshUI) != nil)
                 {
                     self.eventsTableView.reloadData()
                     if self.selectedCity != nil {
@@ -233,9 +234,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let artist = dict["artist"] as! String
         let date = dict["date"] as! NSDate
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd"
-        let dateText = dateFormatter.stringFromDate(date)
+        cellDateFormatter.dateFormat = "MM/dd"
+        let dateText = cellDateFormatter.stringFromDate(date)
         
         cell.textLabel!.text = artist
         cell.detailTextLabel!.text = dateText
@@ -257,7 +257,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         geoCoder.geocodeAddressString(city) { (placemarks, error) -> Void in
             if let marks = placemarks where marks.count > 0 {
                 self.selectedLocation = marks[0].location
-                self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
+                self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, shouldRefreshUI: true)
             }else{
                 print(error?.description)
             }
@@ -271,8 +271,7 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         selectedCity = svc.myArea
         loadSelectedCity(selectedCity!)
     }
-
-
+    
 }
 
 

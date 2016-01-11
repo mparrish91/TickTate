@@ -30,7 +30,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell?.backgroundColor = UIColor.clearColor()
         
         cell?.textLabel!.text = citiesArray[indexPath.row]
-   
+        
         
         
         cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
@@ -40,39 +40,15 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return (citiesArray.count)
-        
-    }
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let currentCell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell!;
-        
-        myArea = currentCell.textLabel!.text
-        print(myArea)
-//        performSegueWithIdentifier("eventsSegue", sender: self)
-        
         
     }
 
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //        if segue.identifier == "eventsSegue" {
-        //            var eventsVC = segue.destinationViewController as! EventsViewController
-        //            eventsVC.selectedCity = myArea
-        //
-        //        }
-        let eventsVC = segue.destinationViewController as! EventsViewController
         let selectedPath = self.citiesTableView.indexPathForCell(sender as! UITableViewCell)
         myArea = citiesArray[(selectedPath?.row)!]
     }
-    
-//     func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject) {
-//
-//        
-//    }
     
     
     
