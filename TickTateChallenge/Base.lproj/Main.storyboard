@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="hkA-KC-0mr" detailTextLabel="jGE-4s-NkH" style="IBUITableViewCellStyleValue1" id="UVn-76-Zui">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UVn-76-Zui" id="VCw-hd-izp">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -211,12 +211,15 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="QcW-BD-nTY">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QcW-BD-nTY" id="oGp-LR-Y2H">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="U0f-Hm-XNJ" kind="unwind" unwindAction="unwindToHere:" id="5af-YB-Cmn"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -229,12 +232,12 @@
                     </view>
                     <connections>
                         <outlet property="citiesTableView" destination="Nwq-dg-e8A" id="MXJ-XG-QPi"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="eventsSegue" id="Ohl-9E-tZD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3eX-Ub-u4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="U0f-Hm-XNJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2411" y="1009"/>
+            <point key="canvasLocation" x="2388" y="1001"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vTi-Cr-qQE">
@@ -256,7 +259,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="oQx-GE-X36"/>
-        <segue reference="Ohl-9E-tZD"/>
+        <segue reference="llu-TM-hjS"/>
     </inferredMetricsTieBreakers>
 </document>

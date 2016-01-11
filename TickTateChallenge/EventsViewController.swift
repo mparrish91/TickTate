@@ -15,9 +15,9 @@ import Parse
 class EventsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var locationManager:CLLocationManager?
-    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var eventsArray: [[String: AnyObject]] = []
-    var RANGE_IN_MILES: CLLocationDistance = 25
+    let RANGE_IN_MILES: CLLocationDistance = 25
     var loggedInUser: PFUser?
     var selectedCity: String?
     var selectedLocation: CLLocation?
@@ -31,8 +31,9 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         super.viewDidLoad()
         
         //if the user selects a city from our menu
-        if selectedCity != nil {
-            loadSelectedCity(selectedCity!)
+        if let city = selectedCity {
+//        if let selectedCity != nil {
+            loadSelectedCity(city)
         }
 
         if checkUserCredentials() != false {
@@ -230,8 +231,8 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        cell?.backgroundColor = UIColor.clearColor()
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        cell.backgroundColor = UIColor.clearColor()
         
         let dict = eventsArray[indexPath.row]
 
@@ -242,12 +243,12 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         dateFormatter.dateFormat = "MM/dd"
         let dateText = dateFormatter.stringFromDate(date)
         
-        cell?.textLabel!.text = artist
-        cell?.detailTextLabel!.text = dateText
-        cell?.textLabel?.font = UIFont(name: "Verdana", size: 13)
-        cell?.contentView.backgroundColor = UIColor.clearColor()
+        cell.textLabel!.text = artist
+        cell.detailTextLabel!.text = dateText
+        cell.textLabel?.font = UIFont(name: "Verdana", size: 13)
+        cell.contentView.backgroundColor = UIColor.clearColor()
         
-        return cell!
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -266,18 +267,27 @@ class EventsViewController: UIViewController, CLLocationManagerDelegate, UITable
         let geoCoder = CLGeocoder()
         
         geoCoder.geocodeAddressString(city) { (placemarks, error) -> Void in
-            if let marks = placemarks {
-                if marks.count > 0 {
-                    self.selectedLocation = marks[0].location
-                     self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
-                }else{
-                    print(error?.description)
+            if let marks = placemarks where marks.count > 0 {
+                self.selectedLocation = marks[0].location
+                self.fireNearEventsQuery(self.RANGE_IN_MILES, argCoord:self.selectedLocation?.coordinate, bRefreshUI: true)
+            }else{
+                print(error?.description)
                 }
-            }
-        
-            
         }
-        
+    
+    }
+    
+    
+    @IBAction func unwindToHere(segue: UIStoryboardSegue) {
+        // And we are back
+        let svc = segue.sourceViewController as! CitiesViewController
+        // use svc to get mood, action, and place
+//        eventsVC.selectedCity = myArea
+        selectedCity = svc.myArea
+        print(selectedCity)
+        print(svc.myArea)
+        loadSelectedCity(selectedCity!)
+
     }
 
 
