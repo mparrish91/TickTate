@@ -43,7 +43,6 @@ class MyCityPromptVC: UIViewController {
                 
                 
                 let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction!) in
-                    print("you have pressed OK button");
                 }
                 alertController.addAction(OKAction)
                 

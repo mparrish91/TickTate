@@ -19,7 +19,7 @@ class ParseHelper: NSObject {
         var activeUser: PFObject?
         
         let query = PFQuery(className: "User")
-        query.whereKey("userID", equalTo: user!.objectId!)
+        query.whereKey("objectID", equalTo: user!.objectId!)
         query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
             if error == nil {
                 //if user is active user already, just update the entry
@@ -31,7 +31,6 @@ class ParseHelper: NSObject {
                 }
                 
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                activeUser!["userID"] = user!.objectId
                 activeUser!["userTitle"] = appDelegate.userTitle
                 activeUser!["userLocation"] = geopoint
 
