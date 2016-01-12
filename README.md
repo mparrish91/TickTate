@@ -1,6 +1,6 @@
 # TickTate
 
-Ticktate is a Swift/Parse app based off the [Ticktate iOS app!](https://itunes.apple.com/us/app/ticktate/id966821187?mt=8)
+Ticktate is a Swift/Parse/CoreLocation app based off the [Ticktate iOS app!](https://itunes.apple.com/us/app/ticktate/id966821187?mt=8)
 
 1. Grabs user location
 2. Pulls concerts/events in their sorrounding area
