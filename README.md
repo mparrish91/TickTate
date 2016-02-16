@@ -14,7 +14,7 @@ Screenshots
 <p align="center">
     <img src ="https://raw.githubusercontent.com/mparrish91/TickTate/master/Screenshots/screenshot.png" height="1067" width="600" />
       <img src ="https://raw.githubusercontent.com/mparrish91/TickTate/master/Screenshots/screenshot1.png" height="1067" width="600" />
-            <img src ="https://raw.githubusercontent.com/mparrish91/TickTate/master/Screenshots/screenshot2.png" height="1067" width="600" />
+            <img src ="https://raw.githubusercontent.com/mparrish91/TickTate/master/Screenshots/screenshot3.png" height="1067" width="600" />
 
 </p>
 
